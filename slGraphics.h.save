@@ -1,0 +1,70 @@
+#ifndef GRAPHICS_H_INCLUDED
+#define GRAPHICS_H_INCLUDED
+
+#endif // GRAPHICS_H_INCLUDED
+
+#include <iostream>
+#include <windows.h>
+
+#include "toString.h"
+
+using namespace std;
+
+//==============================================================================
+//                     x       y
+void setCursorPosition(int,     int);
+
+//==============================================================================
+//              color
+void setColor(  int);
+/*  Dark colors
+    0 = Black
+    1 = Blue
+    2 = Green
+    3 = Lime
+    4 = Red
+    5 = Purple
+    6 = Yellow
+    7 = White
+--------------------------
+    Light colors
+    8 = Black
+    9 = Blue
+   10 = Green
+   11 = Lime
+   12 = Red
+   13 = Purple
+   14 = Yellow
+   15 = White
+*/
+
+//==============================================================================
+//          what?   x       y      color
+void d
+void draw(  int,    int,    int,    int);
+void draw(  char,   int,    int,    int);
+void draw(  string, int,    int,    int);
+void draw(  int, string,    int,    int);
+void draw(  string, string, int,    int);
+
+//==============================================================================
+//          what?   x       y       color   delay (ms)
+void write( char,   int,    int,    int,    int);
+void write( string, int,    int,    int,    int);
+void write( string, string, int,    int,    int);
+
+//==============================================================================
+//             x    y
+void translate(int, int);
+void translateTo(int, int);
+
+//==============================================================================
+//                 what?    x       y       w       h       color
+void fillRectangle(char,    int,    int,    int,    int,    int);
+
+//==============================================================================
+void setWindowSize(int, int);
+int getWindowWidth();
+int getWindowHeight();
+
+bool inScreen(int, int);

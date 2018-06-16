@@ -1,0 +1,169 @@
+#include "slGraphics.h"
+
+int cx = 0,
+    cy = 0;
+
+int tx = 0,
+    ty = 0;
+
+int WW = 30,
+    WH = 30;
+
+//==============================================================================
+void setCursorPosition(int x, int y)
+{
+    x += tx;
+    y += ty;
+
+    /*
+    if(x < 0) return;
+    if(x > WW-1) return;
+    if(y < 0) return;
+    if(y > WH-1) return;
+    */
+
+    COORD c;
+    c.X = cx = x;
+    c.Y = cy = y;
+    SetConsoleCursorPosition (GetStdHandle (STD_OUTPUT_HANDLE), c);
+}
+void setColor(int color)
+{
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
+}
+
+//==============================================================================
+void draw(char c)
+{
+    if(!inScreen(cx, cy)) return;
+    cout << c;
+}
+void draw(char c, int x, int y)
+{
+    setCursorPosition(x, y);
+    draw(c);
+}
+void draw(int i , int x , int y , int color)
+{
+    setColor(color);
+    setCursorPosition(x,y);
+    draw(toString(i), x, y);
+}
+void draw(int i , string x , int y , int color)
+{
+    draw(toString(i), x, y, color);
+}
+void draw(char c, int x, int y, int color)
+{
+    setColor(color);
+    setCursorPosition(x, y);
+    draw(c);
+}
+void draw(string s, int x, int y)
+{
+    setCursorPosition(x, y);
+    for(int i=0; i<s.length(); i++)
+        draw(s[i], x+i, y);
+}
+void draw(string s, int x, int y, int color)
+{
+    setColor(color);
+    draw(s, x, y);
+}
+void draw(string s , string a, int y, int color)
+{
+    if(a == "center")
+    {
+        draw(s,WW/2 - s.length()/2,y,color);
+    }
+    else if(a == "left")
+    {
+        draw(s, 0, y, color);
+    }
+    else if(a == "right")
+    {
+        draw(s, WW - s.length(), y, color);
+    }
+}
+
+//==============================================================================
+void write(string s, int x, int y, int color, int delay)
+{
+    for(int i = 0; i < s.length(); i++)
+    {
+        //draw(char(219),x+i,y,15);
+        Sleep(delay);
+        draw(s[i], x+i ,y ,color);
+    }
+}
+void write(string s , string a, int y, int color, int delay)
+{
+    if(a == "center")
+    {
+        write(s,WW/2 - s.length()/2,y, color, delay);
+    }
+    else if(a == "left")
+    {
+        write(s, 0, y, color, delay);
+    }
+    else if(a == "right")
+    {
+        write(s, WW - s.length(), y, color, delay);
+    }
+}
+void write(char c, int x, int y, int color, int delay)
+{
+    setColor(color);
+    draw(char(219),x,y,color);
+    Sleep(delay);
+    draw(c, x, y);
+}
+
+//==============================================================================
+void translate(int ntx, int nty)
+{
+    tx += ntx;
+    ty += nty;
+}
+void translateTo(int ntx, int nty)
+{
+    tx = ntx;
+    ty = nty;
+}
+
+//==============================================================================
+void fillRectangle(char c, int x, int y, int w, int h, int color)
+{
+    string s = "";
+    for(int i=0; i<w; i++) s += c;
+
+    setColor(color);
+
+    for(int i=0; i<h; i++)
+    {
+        setCursorPosition(x, y+i);
+        draw(s, x, y);
+    }
+}
+//==============================================================================
+const char* modeC()
+{
+    return "mode ";
+}
+void setWindowSize(int nw, int nh) {
+    WW = nw;
+    WH = nh;
+
+    system(toCharArr("mode "+toString(WW)+','+toString(WH)));
+}
+int getWindowWidth() { return WW; }
+int getWindowHeight() { return WH; }
+
+bool inScreen(int x, int y)
+{
+    return
+        x+tx >= 0     &&
+        x+tx < WW+tx   &&
+        y >= ty     &&
+        y < WH+ty;
+}

@@ -1,0 +1,49 @@
+# depslib dependency file v1.0
+1529173838 source:c:\documents and settings\leszek\pulpit\sphere\main.cpp
+	<iostream>
+	<windows.h>
+	<conio.h>
+	<math.h>
+	"slGraphics.h"
+
+1529170742 c:\documents and settings\leszek\pulpit\sphere\slgraphics.h
+	<iostream>
+	<windows.h>
+	"toString.h"
+
+1529165945 c:\documents and settings\leszek\pulpit\sphere\tostring.h
+	<iostream>
+
+1529170975 source:c:\documents and settings\leszek\pulpit\sphere\slgraphics.cpp
+	"slGraphics.h"
+
+1529165970 source:c:\documents and settings\leszek\pulpit\sphere\tostring.cpp
+	"toString.h"
+
+1529183954 source:f:\all\cppdev\sphere\main.cpp
+	<iostream>
+	<windows.h>
+	<conio.h>
+	<math.h>
+	"slGraphics.h"
+
+1529183682 f:\all\cppdev\sphere\slgraphics.h
+	<iostream>
+	<windows.h>
+	"slVariables.h"
+
+1529165946 f:\all\cppdev\sphere\tostring.h
+	<iostream>
+
+1529183936 source:f:\all\cppdev\sphere\slgraphics.cpp
+	"slGraphics.h"
+
+1529165972 source:f:\all\cppdev\sphere\tostring.cpp
+	"toString.h"
+
+1529182524 f:\all\cppdev\sphere\slvariables.h
+	<iostream>
+
+1529182488 source:f:\all\cppdev\sphere\slvariables.cpp
+	"slVariables.h"
+

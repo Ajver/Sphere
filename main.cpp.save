@@ -1,0 +1,97 @@
+#include <iostream>
+#include <windows.h>
+#include <conio.h>
+#include <math.h>
+
+#include "slGraphics.h"
+
+using namespace std;
+
+const float PI = 3.14159f;
+const float HALF_PI = PI/2.0f;
+
+float map(float a, float minA, float maxA, float minB, float maxB)
+{
+    float Arange = maxA - minA;
+    float Brange = maxB - minB;
+
+    float proportion = (a-minA)/Arange;
+
+    return Brange*proportion + minB;
+}
+
+class Sphere
+{
+public:
+    Sphere(float nr, int ntotal)
+    {
+        r = nr;
+        total = ntotal;
+    }
+
+    int getColorFromZ(int z)
+    {
+        if(z <= -r/3)
+            return 1;
+
+        if(z <= r/3)
+            return 8;
+
+        return 15;
+    }
+
+    char getCharFromZ(int z)
+    {
+        if(z == -r)
+            return ' ';
+
+        if(z <= -r/2)
+            return (char)176;
+
+        if(z <= 0)
+            return (char)177;
+
+        if(z <= r/2)
+            return (char)178;
+
+        return (char)219;
+    }
+
+    void render()
+    {
+        for(int i=0; i<total; i++) {
+            for(int j=0; j<total; j++) {
+                int x = (int)(r * sin(map(j, 0, total-1, -PI, PI)) * cos(map(i, 0, total-1, -HALF_PI, HALF_PI)));
+                int y = (int)(r * sin(map(i, 0, total-1, -HALF_PI, HALF_PI))/1.5f);
+                int z = (int)(r * cos(map(i, 0, total-1, -HALF_PI, HALF_PI)) * sin(map(j, 0, total-1, -PI, PI)));
+
+                draw(, x, y, getColorFromZ(z));
+            }
+        }
+    }
+
+private:
+    float r;
+
+    // Number of all particles
+    int total;
+
+
+};
+
+int main()
+{
+    setWindowSize(120, 38);
+
+    translateTo(getWindowWidth()/3, getWindowHeight()/2);
+
+    Sphere sp(14, 50);
+    sp.render();
+
+    translate(getWindowWidth()/3, 0);
+
+
+    getch();
+
+    return 0;
+}
