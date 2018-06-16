@@ -118,7 +118,7 @@ int main()
         clearScreen();
         drawLine('#', 0, 0, x, y, 14);
 
-        // For stop the program
+
         switch(getch())
         {
         case 'w': y--; break;
@@ -131,7 +131,7 @@ int main()
 
     float r = 30;
 
-    for(int i=0; true; i=(i+1)%60)
+    for(int i=0; false; i=(i+1)%60)
     {
         clearScreen();
         drawCircle('@', 0, 0, (int)r+1, 12);
@@ -140,6 +140,11 @@ int main()
 
         Sleep(100);
     }
+
+    drawCircle('x', 0, 0, 5, 10);
+
+    // For pause the program
+    getch();
 
     return 0;
 }

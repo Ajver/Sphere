@@ -153,13 +153,11 @@ void drawCircle(char c, int x, int y, int r, int color)
 {
     setColor(color);
 
-    int margin = 12;
-
-    for(int i=-r; i<r; i++)
+    for(int i=-r; i<r+1; i++)
     {
-        for(int j=-r; j<r; j++)
+        for(int j=-r; j<r+1; j++)
         {
-            if(r*r > i*i + j*j - margin && r*r < i*i + j*j + margin)
+            if(r*r > i*i + j*j - r && r*r < i*i + j*j + r)
                 draw(c, x+j, y+i);
         }
     }
