@@ -2,6 +2,7 @@
 #include <windows.h>
 #include <conio.h>
 #include <math.h>
+#include <vector>
 
 #include "slGraphics.h"
 
@@ -21,6 +22,23 @@ float map(float a, float minA, float maxA, float minB, float maxB)
     return Brange*proportion + minB;
 }
 
+class Particle : public slVec2D
+{
+public:
+    vector<Particle> neighbors;
+
+    void addNeighbor(Particle p)
+    {
+        neighbors.push_back(p);
+    }
+
+    void render()
+    {
+        for(int i=0; i<neighbors.size(); i++)
+            drawLine('o', neighbors[i].x, neighbors[i].y-4, neighbors[i].x, neighbors[i].y, 14);
+    }
+};
+
 class Sphere
 {
 public:
@@ -28,12 +46,53 @@ public:
     {
         r = nr;
         total = ntotal;
+
+        grid = new Particle[total*total];
+
+        create();
+        setNeighbors();
+    }
+
+    void create()
+    {
+        for(int i=0; i<total; i++)
+        {
+            for(int j=0; j<total; j++)
+            {
+                float alpha = map(total-i-1, 0, total-1, 0, PI);
+                float beta = map(total-j-1, 0, total-1, 0, TWO_PI);
+
+                int x = (int)(r * sin(alpha) * cos(beta));
+                int y = (int)(r * sin(alpha) * sin(beta));
+
+                Particle *p = &grid[total * i + j];
+
+                p->x = x;
+                p->y = y;
+            }
+        }
+    }
+
+    void setNeighbors()
+    {
+        for(int i=0; i<total-1; i++)
+        {
+            for(int j=0; j<total; j++)
+            {
+                Particle *p = &grid[total * i + j];
+
+                p->addNeighbor(grid[total * i + j + 1]);
+                p->addNeighbor(grid[total * (i+1) + j]);
+            }
+        }
     }
 
     void render()
     {
-        for(int i=0; i<total; i++) {
-            for(int j=0; j<total; j++) {
+        for(int i=0; i<total; i++)
+        {
+            for(int j=0; j<total; j++)
+            {
                 float alpha = map(total-i-1, 0, total-1, 0, PI);
                 float beta = map(total-j-1, 0, total-1, 0, TWO_PI);
 
@@ -43,6 +102,8 @@ public:
 
                 translate(getWindowWidth()/4-15, 0);
                 draw(getCharFromZ(z), x, y, getColorFromZ(z));
+
+                //grid[10].render();
 
                 translate(getWindowWidth()/4+15, 0);
                 draw(getCharFromZ(z), z, y, getColorFromZ(z));
@@ -57,6 +118,8 @@ public:
     }
 
 private:
+    Particle *grid;
+
     float r;
 
     // Number of all particles
@@ -96,28 +159,23 @@ private:
         return 219;
     }
 
+    slVec2D get(int x, int y)
+    {
+        return grid[total * y + x];
+    }
 };
 
-int main()
+void stering()
 {
-    setWindowSize(180, 70);
-
-    translate(0, getWindowHeight()/2);
-
-    Sphere sp(25, 10);
-    //sp.render();
-
-    translateTo(getWindowWidth()/2,getWindowHeight()/2);
-
     int x = 3;
     int y = 20;
 
-    /*
     while(true)
     {
         clearScreen();
         drawLine('#', 0, 0, x, y, 14);
 
+        draw(toString(x)+", "+toString(y), x+1, y, 15);
 
         switch(getch())
         {
@@ -125,23 +183,48 @@ int main()
         case 's': y++; break;
         case 'a': x--; break;
         case 'd': x++; break;
+        case 27: return;
         }
     }
-    */
+}
+
+int main()
+{
+    setWindowSize(180, 70);
+
+
+
+    translate(0, getWindowHeight()/2);
+
+    Sphere sp(25,20);
+    sp.render();
+
+    translateTo(getWindowWidth()/2,getWindowHeight()/2);
+
+
+
+    getch();
+
+
+    stering();
+
 
     float r = 30;
 
-    for(int i=0; false; i=(i+1)%60)
+    for(int i=0; true; i=(i+1)%60)
     {
         clearScreen();
-        drawCircle('@', 0, 0, (int)r+1, 12);
+        drawCircle('@', 0, 0, (int)r, 12);
 
         drawLine('#', 0, 0, (int)(r * cos(i*TWO_PI/60)), (int)(r * sin(i*TWO_PI/60)), 14);
 
         Sleep(100);
     }
 
-    drawCircle('x', 0, 0, 5, 10);
+    translateTo(24,40);
+    drawCircle('x', 00, 00, 20, 12);
+
+    drawLine('x', 0, 0, 0, 20, 10);
 
     // For pause the program
     getch();

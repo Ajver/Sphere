@@ -149,6 +149,19 @@ void fillRectangle(char c, int x, int y, int w, int h, int color)
         draw(s, x, y);
     }
 }
+void fillCircle(char c, int x, int y, int r, int color)
+{
+    setColor(color);
+
+    for(int i=-r; i<r+1; i++)
+    {
+        for(int j=-r; j<r+1; j++)
+        {
+            if(r*r >= i*i + j*j)
+                draw(c, x+j, y+i);
+        }
+    }
+}
 void drawCircle(char c, int x, int y, int r, int color)
 {
     setColor(color);
@@ -157,7 +170,7 @@ void drawCircle(char c, int x, int y, int r, int color)
     {
         for(int j=-r; j<r+1; j++)
         {
-            if(r*r > i*i + j*j - r && r*r < i*i + j*j + r)
+            if(r*r >= i*i + j*j - r && r*r <= i*i + j*j + r)
                 draw(c, x+j, y+i);
         }
     }
@@ -168,12 +181,14 @@ void drawLine(char c, int x1, int y1, int x2, int y2, int color)
 {
     setColor(color);
 
-
     int w = x2 - x1;
     int h = y2 - y1;
 
-    if(w == h && h == 0) return;
+    if(w == h && h == 0) {
+        draw(c, x1, y1);
 
+        return;
+    }
     if(abs(w) > abs(h)) {
         if(w < 0)
         {

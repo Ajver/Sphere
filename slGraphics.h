@@ -7,6 +7,8 @@
 #include <windows.h>
 
 #include "slVariables.h"
+#include "slVec2D.h"
+
 
 using namespace std;
 
@@ -65,6 +67,7 @@ void translateTo(int, int);
 void fillRectangle( char,   int,    int,    int,    int,    int);
 
 //                  what?   centerX centerY r       color
+void fillCircle(    char,   int,    int,    int,    int);
 void drawCircle(    char,   int,    int,    int,    int);
 
 //            what?     x1      y1      x2      y2      color

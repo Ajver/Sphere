@@ -47,24 +47,36 @@
 1529182488 source:f:\all\cppdev\sphere\slvariables.cpp
 	"slVariables.h"
 
-1529183954 source:d:\git repositories\sphere\main.cpp
+1529188052 source:d:\git repositories\sphere\main.cpp
 	<iostream>
 	<windows.h>
 	<conio.h>
 	<math.h>
+	<vector>
 	"slGraphics.h"
 
-1529183682 d:\git repositories\sphere\slgraphics.h
+1529185651 d:\git repositories\sphere\slgraphics.h
 	<iostream>
 	<windows.h>
 	"slVariables.h"
+	"slVec2D.h"
 
 1529182524 d:\git repositories\sphere\slvariables.h
 	<iostream>
 
-1529184415 source:d:\git repositories\sphere\slgraphics.cpp
+1529188133 source:d:\git repositories\sphere\slgraphics.cpp
 	"slGraphics.h"
 
 1529182488 source:d:\git repositories\sphere\slvariables.cpp
 	"slVariables.h"
+
+1529185788 d:\git repositories\sphere\slvec2d.h
+
+1529185798 source:d:\git repositories\sphere\slvec2d.cpp
+	"slVec2D.h"
+
+1529186252 source:d:\git repositories\sphere\slvec3d.cpp
+	"slVec3D.h"
+
+1529186238 d:\git repositories\sphere\slvec3d.h
 
